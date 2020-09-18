@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lbvekpEOki3wiQxGO7nsK71xptzwaGRJCFxnxLNXQLlm6IypgrTqCN7TQU24fBA6ashSYKr7uBtntcGFRSSLcg==",
+  "dgSpecHash": "8GIpRqXiDOscmBaGJRYTTdIzrJS0wuiXlE5c1JGAn5O1Kkj6Dg0uzGnliB+6ac3ow+pcFAYQg/pt0HsfP0S4sg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\yszilagyi\\Source\\Repos\\DotNet\\ConsoleApp\\Before\\UnitTests\\UnitTests.csproj",
+  "projectFilePath": "C:\\Users\\yszilagyi\\Documents\\GitHub\\Shelter\\UnitTests\\UnitTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\yszilagyi\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\yszilagyi\\.nuget\\packages\\coverlet.collector\\1.2.0\\coverlet.collector.1.2.0.nupkg.sha512",

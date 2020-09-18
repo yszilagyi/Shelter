@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\yszilagyi\\Source\\Repos\\DotNet\\ConsoleApp\\Before\\ShelterConsole\\ShelterConsole.csproj": {}
+    "C:\\Users\\yszilagyi\\Documents\\GitHub\\Shelter\\ShelterConsole\\ShelterConsole.csproj": {}
   },
   "projects": {
-    "C:\\Users\\yszilagyi\\Source\\Repos\\DotNet\\ConsoleApp\\Before\\ShelterConsole\\ShelterConsole.csproj": {
+    "C:\\Users\\yszilagyi\\Documents\\GitHub\\Shelter\\ShelterConsole\\ShelterConsole.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yszilagyi\\Source\\Repos\\DotNet\\ConsoleApp\\Before\\ShelterConsole\\ShelterConsole.csproj",
+        "projectUniqueName": "C:\\Users\\yszilagyi\\Documents\\GitHub\\Shelter\\ShelterConsole\\ShelterConsole.csproj",
         "projectName": "ShelterConsole",
-        "projectPath": "C:\\Users\\yszilagyi\\Source\\Repos\\DotNet\\ConsoleApp\\Before\\ShelterConsole\\ShelterConsole.csproj",
+        "projectPath": "C:\\Users\\yszilagyi\\Documents\\GitHub\\Shelter\\ShelterConsole\\ShelterConsole.csproj",
         "packagesPath": "C:\\Users\\yszilagyi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yszilagyi\\Source\\Repos\\DotNet\\ConsoleApp\\Before\\ShelterConsole\\obj\\",
+        "outputPath": "C:\\Users\\yszilagyi\\Documents\\GitHub\\Shelter\\ShelterConsole\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

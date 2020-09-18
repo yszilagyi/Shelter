@@ -53,7 +53,7 @@ namespace ShelterConsole.BusinessLogic
             return true;
         }
 
-        public Animal BuyAnimal(string typeOfAnimal)
+        public Animal BuyAnimal(string typeOfAnimal, Person person)
         {
             if (_shelterRepository.IsShelterEmpty()) return null;
 
@@ -73,6 +73,7 @@ namespace ShelterConsole.BusinessLogic
                     return null;
                 }
                 _shelterRepository.RemoveAnimal(cat);
+                person.OwnedAnimals.Add(cat.Name, cat);
                 // cat need to be removed after selling it
                 Console.WriteLine("Cat successfuly bought");
                 return cat;
@@ -89,6 +90,7 @@ namespace ShelterConsole.BusinessLogic
                 // dog need to be removed after selling it
                 Console.WriteLine("dog successfuly bought");
                 _shelterRepository.RemoveAnimal(dog);
+                person.OwnedAnimals.Add(dog.Name, dog);
                 return dog;
             }
             if (typeOfAnimal == ShelterConstants.Snake)
@@ -103,6 +105,7 @@ namespace ShelterConsole.BusinessLogic
                 // dog need to be removed after selling it
                 Console.WriteLine("snake successfuly bought");
                 _shelterRepository.RemoveAnimal(snake);
+                person.OwnedAnimals.Add(snake.Name, snake);
                 return snake;
 
             }
@@ -118,6 +121,7 @@ namespace ShelterConsole.BusinessLogic
                 // dog need to be removed after selling it
                 Console.WriteLine("hamster successfuly bought");
                 _shelterRepository.RemoveAnimal(hamster);
+                person.OwnedAnimals.Add(hamster.Name, hamster);
                 return hamster;
             }
             if (typeOfAnimal == ShelterConstants.Rabbit)
@@ -132,11 +136,16 @@ namespace ShelterConsole.BusinessLogic
                 // dog need to be removed after selling it
                 Console.WriteLine("dog successfuly bought");
                 _shelterRepository.RemoveAnimal(rabbit);
+                person.OwnedAnimals.Add(rabbit.Name, rabbit);
                 return rabbit;
             }
             throw new ArgumentNullException();
         }
-
+        public string GetNumberOfAnimalsInShelter()
+        {
+            return $"{GetNumberOfCatsInShelter()}\n{GetNumberOfDogsInShelter()}\n{GetNumberOfSnakesInShelter()}" +
+                $"\n{GetNumberOfHamstersInShelter()}\n{GetNumberOfRabbitsInShelter()}";
+        }
         public string GetNumberOfCatsInShelter()
         {
             return $"{_shelterRepository.GetNumberOfCatsInShelter()} cat(s) in the shelter";
