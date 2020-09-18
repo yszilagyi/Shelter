@@ -21,6 +21,6 @@ namespace ShelterConsole.Models
 
         //}
 
-        public
+
     }
 }
