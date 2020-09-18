@@ -1,0 +1,13 @@
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\obj\Debug\netcoreapp3.1\ShelterConsole.csprojAssemblyReference.cache
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\obj\Debug\netcoreapp3.1\ShelterConsole.AssemblyInfoInputs.cache
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\obj\Debug\netcoreapp3.1\ShelterConsole.AssemblyInfo.cs
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\obj\Debug\netcoreapp3.1\ShelterConsole.csproj.CoreCompileInputs.cache
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\bin\Debug\netcoreapp3.1\ShelterConsole.exe
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\bin\Debug\netcoreapp3.1\ShelterConsole.deps.json
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\bin\Debug\netcoreapp3.1\ShelterConsole.runtimeconfig.json
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\bin\Debug\netcoreapp3.1\ShelterConsole.runtimeconfig.dev.json
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\bin\Debug\netcoreapp3.1\ShelterConsole.dll
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\bin\Debug\netcoreapp3.1\ShelterConsole.pdb
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\obj\Debug\netcoreapp3.1\ShelterConsole.dll
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\obj\Debug\netcoreapp3.1\ShelterConsole.pdb
+C:\Users\yszilagyi\Source\Repos\DotNet\ConsoleApp\Before\ShelterConsole\obj\Debug\netcoreapp3.1\ShelterConsole.genruntimeconfig.cache
