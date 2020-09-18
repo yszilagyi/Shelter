@@ -13,12 +13,14 @@ namespace ShelterConsole.Models
         public int Age { get; set; }
         public double Money { get; set; }
 
-        public Dictionary<string,Animal> OwnedAnimals;
+        public Dictionary<string, Animal> OwnedAnimals;
 
         //public Animal BuyAnimal(string typeOfAnimal)
         //{
         //    return ShelterLogic.BuyAnimal(typeOfAnimal, instance );
 
         //}
+
+        public
     }
 }
