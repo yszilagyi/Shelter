@@ -5,28 +5,43 @@ using System.Linq;
 using ShelterConsole.DataAccess.Interfaces;
 using System.Threading;
 using System.Reflection;
+using ShelterConsole.Utilities;
+using System.Security.Cryptography;
 
 namespace ShelterConsole.DataAccess.Repositories
 {
     public class ShelterRepository : IShelterRepository
     {
+        private Dictionary<String, Type> d = new Dictionary<string, Type> {
+                {"cat", typeof(Cat) },
+                {"dog", typeof(Dog) },
+                {"snake", typeof(Snake) },
+                {"hamster", typeof(Hamster) },
+                {"rabbit", typeof(Rabbit) }
+
+            };
         private List<Animal> _animals;
         public String[] _animalsInShelter;
         private int _maxNumberOfAnimals;
-        public Animal[] GetInheritedClasses(Animal animal)
-        {
-            //if you want the abstract classes drop the !TheType.IsAbstract but it is probably to instance so its a good idea to keep it.
-            var x = Assembly.GetAssembly(typeof(Animal)).GetTypes().Where(TheType => TheType.IsClass
-                        && TheType.IsSubclassOf(typeof(Animal)));
-            return new Animal[0];
-        }
+        //public Animal[] GetInheritedClasses(Animal animal)
+        //{
+        //    //if you want the abstract classes drop the !TheType.IsAbstract but it is probably to instance so its a good idea to keep it.
+        //    var x = Assembly.GetAssembly(typeof(Animal)).GetTypes().Where(TheType => TheType.IsClass
+        //                && TheType.IsSubclassOf(typeof(Animal)));
+        //    return new Animal[0];
+        //}
 
         public ShelterRepository(int maxNumberOfAnimals)
         {
             _animals = new List<Animal>();
             _maxNumberOfAnimals = maxNumberOfAnimals;
         }
-
+        #region Add/Remove animals
+        /// <summary>
+        /// Add animal to shelter
+        /// </summary>
+        /// <param name="animal"></param>
+        /// <returns></returns>
         public bool AddAnimal(Animal animal)
         {
             // if the shelter is full throw an exception
@@ -37,93 +52,11 @@ namespace ShelterConsole.DataAccess.Repositories
 
             return true;
         }
-
-
-
-
-        public Cat GetCat()
-        {
-            // if the shelter is empty throw an exception
-            if (IsShelterEmpty()) throw new Exception("Shelter is empty");
-
-            //loop through the list of animals to find a cat
-            foreach (Animal animal in _animals)
-            {
-                if (animal.GetType() == typeof(Cat))
-                {
-                    return (Cat)animal;
-                }
-            }
-            // return null if you didn't find a cat
-            return null;
-        }
-
-        public Dog GetDog()
-        {
-            // if the shelter is empty throw an exception
-            if (IsShelterEmpty()) throw new Exception("Shelter is empty");
-            //loop through the list of animals to find a dog
-            for (int i = 0; i < _animals.Count; i++)
-            {
-                if (_animals[i].GetType() == typeof(Dog))
-                {
-                    return (Dog)_animals[i];
-                }
-            }
-            // return null if you didn't find a dog
-            return null;
-        }
-
-        public Snake GetSnake()
-        {
-            // if the shelter is empty throw an exception
-            if (IsShelterEmpty()) throw new Exception("Shelter is empty");
-
-            //loop through the list of animals to find a cat
-            foreach (Animal animal in _animals)
-            {
-                if (animal.GetType() == typeof(Snake))
-                {
-                    return (Snake)animal;
-                }
-            }
-            // return null if you didn't find a cat
-            return null;
-        }
-        public Hamster GetHamster()
-        {
-            // if the shelter is empty throw an exception
-            if (IsShelterEmpty()) throw new Exception("Shelter is empty");
-
-            //loop through the list of animals to find a cat
-            foreach (Animal animal in _animals)
-            {
-                if (animal.GetType() == typeof(Hamster))
-                {
-                    return (Hamster)animal;
-                }
-            }
-            // return null if you didn't find a cat
-            return null;
-        }
-
-        public Rabbit GetRabbit()
-        {
-            // if the shelter is empty throw an exception
-            if (IsShelterEmpty()) throw new Exception("Shelter is empty");
-
-            //loop through the list of animals to find a cat
-            foreach (Animal animal in _animals)
-            {
-                if (animal.GetType() == typeof(Rabbit))
-                {
-                    return (Rabbit)animal;
-                }
-            }
-            // return null if you didn't find a cat
-            return null;
-        }
-
+        /// <summary>
+        /// Remove animal from shelter
+        /// </summary>
+        /// <param name="animal"></param>
+        /// <returns></returns>
         public bool RemoveAnimal(Animal animal)
         {
             // if the animal is null throw an exception
@@ -142,91 +75,91 @@ namespace ShelterConsole.DataAccess.Repositories
             // return true if the operation go well
             return true;
         }
+        #endregion 
+        #region Get animal to adopt
 
+        public Animal GetAnimal<T>(string identifier = null)
+        {
+
+            if (IsShelterEmpty()) throw new Exception("Shelter is empty");
+            var animals = (from animal in _animals where animal.GetType() == typeof(T) select animal).ToList();
+            if (identifier != null)
+            {
+                //InvariantCultureIgnoreCase case does not matter, accents.
+                return animals.FirstOrDefault(x => x.Name.Equals(identifier, StringComparison.InvariantCultureIgnoreCase));
+            }
+            return (from animal in _animals where animal.GetType() == typeof(T) select animal).FirstOrDefault();
+        }
+        #endregion
+        #region Get numbers of animals
+        /// <summary>
+        /// Gets the number of Cats in the shelter
+        /// </summary>
+        /// <returns></returns>
         public int GetNumberOfCatsInShelter()
         {
-            if (IsShelterEmpty()) return 0;
-            int i = 0;
-            int numberOfCats = 0;
-            while (i < _animals.Count)
-            {
-                if (_animals[i].GetType() == typeof(Cat))
-                {
-                    numberOfCats++;
-                }
-                i++;
-            }
-
-            return numberOfCats;
+            return IsShelterEmpty()
+                ? 0
+                : (from animal in _animals where animal.GetType() == typeof(Cat) select animal).Count();
         }
-
+        /// <summary>
+        /// Gets the number of Dogs in the shelter
+        /// </summary>
+        /// <returns></returns>
         public int GetNumberOfDogsInShelter()
         {
-            if (IsShelterEmpty()) return 0;
-            int numberOfDogs = 0;
-
-            foreach (Animal animal in _animals)
-            {
-                if (animal.GetType() == typeof(Dog))
-                {
-                    numberOfDogs++;
-                }
-            }
-
-            return numberOfDogs;
+            return IsShelterEmpty()
+                ? 0
+                : (from animal in _animals where animal.GetType() == typeof(Dog) select animal).Count();
         }
-
+        /// <summary>
+        /// Gets the number of Snakes in the shelter
+        /// </summary>
+        /// <returns></returns>
         public int GetNumberOfSnakesInShelter()
         {
-            if (IsShelterEmpty()) return 0;
-            int i = 0;
-            int numberOfSnakes = 0;
-            while (i < _animals.Count)
-            {
-                if (_animals[i].GetType() == typeof(Snake))
-                {
-                    numberOfSnakes++;
-                }
-                i++;
-            }
-
-            return numberOfSnakes;
+            return IsShelterEmpty()
+                ? 0
+                : (from animal in _animals where animal.GetType() == typeof(Snake) select animal).Count();
         }
-
+        /// <summary>
+        /// Gets the number of Hamsters in the shelter
+        /// </summary>
+        /// <returns></returns>
         public int GetNumberOfHamstersInShelter()
         {
-            if (IsShelterEmpty()) return 0;
-            int i = 0;
-            int numberOfHamsters = 0;
-            while (i < _animals.Count)
-            {
-                if (_animals[i].GetType() == typeof(Hamster))
-                {
-                    numberOfHamsters++;
-                }
-                i++;
-            }
-
-            return numberOfHamsters;
+            return IsShelterEmpty()
+                ? 0
+                : (from animal in _animals where animal.GetType() == typeof(Hamster) select animal).Count();
         }
-
+        /// <summary>
+        /// Gets the number of Rabbits in the shelter
+        /// </summary>
+        /// <returns></returns>
         public int GetNumberOfRabbitsInShelter()
         {
-            if (IsShelterEmpty()) return 0;
-            int i = 0;
-            int numberOfRabbits = 0;
-            while (i < _animals.Count)
-            {
-                if (_animals[i].GetType() == typeof(Rabbit))
-                {
-                    numberOfRabbits++;
-                }
-                i++;
-            }
-
-            return numberOfRabbits;
+            return IsShelterEmpty()
+                ? 0
+                : (from animal in _animals where animal.GetType() == typeof(Rabbit) select animal).Count();
         }
+        /// <summary>
+        /// Gets the number of specified animal(s) in the shelter
+        /// </summary>
+        /// <param name="typeOfAnimal"></param>
+        /// <returns></returns>
+        public int GetNumberOfAnimalsInShelter(Type typeOfAnimal)
+        {
 
+            return IsShelterEmpty()
+                ? 0
+                : (from animal in _animals where animal.GetType() == typeOfAnimal select animal).Count();
+        }
+        #endregion
+        #region Shelter empty or full
+        /// <summary>
+        /// Checks whether shelter is empty
+        /// </summary>
+        /// <returns></returns>
         public bool IsShelterEmpty()
         {
             if (!_animals.Any())
@@ -236,7 +169,10 @@ namespace ShelterConsole.DataAccess.Repositories
             }
             return false;
         }
-
+        /// <summary>
+        /// Checks whether shelter is full
+        /// </summary>
+        /// <returns></returns>
         public bool IsShelterFull()
         {
             if (_animals.Count == _maxNumberOfAnimals)
@@ -246,5 +182,6 @@ namespace ShelterConsole.DataAccess.Repositories
             }
             return false;
         }
+        #endregion
     }
 }

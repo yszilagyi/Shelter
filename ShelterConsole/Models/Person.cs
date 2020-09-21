@@ -15,12 +15,21 @@ namespace ShelterConsole.Models
 
         public Dictionary<string, Animal> OwnedAnimals;
 
-        //public Animal BuyAnimal(string typeOfAnimal)
-        //{
-        //    return ShelterLogic.BuyAnimal(typeOfAnimal, instance );
+        public void ShowAnimals()
+        {
+            Console.WriteLine($"{Name} owns {OwnedAnimals.Count} animal(s): {string.Join(", ", OwnedAnimals.Keys)}");
+        }
+        public void BuyAnimal<T>(ShelterLogic shelter)
+        {
 
-        //}
+            shelter.BuyAnimal<T>(this);
+        }
 
+        public void BuyAnimal<T>(ShelterLogic shelter, string identifier)
+        {
+
+            shelter.BuyAnimal<T>(this, identifier);
+        }
 
     }
 }

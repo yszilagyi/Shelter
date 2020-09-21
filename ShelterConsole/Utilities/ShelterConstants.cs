@@ -11,5 +11,6 @@ namespace ShelterConsole.Utilities
         public const string Snake = "snake";
         public const string Hamster = "hamster";
         public const string Rabbit = "rabbit";
+        
     }
 }

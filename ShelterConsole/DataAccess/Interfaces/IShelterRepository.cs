@@ -1,19 +1,19 @@
 ﻿using ShelterConsole.Models;
+using System;
 
-namespace ShelterConsole.DataAccess.Interfaces {
-    public interface IShelterRepository {
+namespace ShelterConsole.DataAccess.Interfaces
+{
+    public interface IShelterRepository
+    {
         bool AddAnimal(Animal animal);
-        Cat GetCat();
-        Dog GetDog();
-        Snake GetSnake();
-        Hamster GetHamster();
-        Rabbit GetRabbit();
 
+        Animal GetAnimal<T>(string identifier = null);
         int GetNumberOfCatsInShelter();
         int GetNumberOfDogsInShelter();
         int GetNumberOfSnakesInShelter();
         int GetNumberOfHamstersInShelter();
         int GetNumberOfRabbitsInShelter();
+        int GetNumberOfAnimalsInShelter(Type typeOfAnimal);
 
         bool IsShelterEmpty();
         bool IsShelterFull();
