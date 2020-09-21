@@ -22,7 +22,7 @@ namespace ShelterConsole.BusinessLogic
                 {"rabbit", typeof(Rabbit) }
             };
         private PurchaseHelper _purchaseHelper;
-
+        
 
         public ShelterLogic(IShelterRepository shelterRepository)
         {
@@ -38,9 +38,6 @@ namespace ShelterConsole.BusinessLogic
             {
                 throw new Exception("You don't have any animals to send to shelter.");
             }
-            // make sure that the user try to send a dog or a cat, the shelter should not contain any 'generic' animals
-
-            // use try catch during sending an animal, there is possiblity it can go wrong
             else
             {
                 if (!d.ContainsValue(animal.GetType()))
@@ -64,7 +61,7 @@ namespace ShelterConsole.BusinessLogic
 
         public Animal BuyAnimal<T>(Person person)
         {
-
+            
             if (_shelterRepository.IsShelterEmpty()) return null;
 
             //throw an exception if invalid kind of animal
@@ -75,13 +72,13 @@ namespace ShelterConsole.BusinessLogic
             }
             var type = d.FirstOrDefault(x => x.Value == typeof(T)).Value;
 
-            return _purchaseHelper.PurchaseAnimal<T>();
+            return _purchaseHelper.PurchaseAnimal<T>(person);
 
         }
 
         public Animal BuyAnimal<T>(Person person, string identifier)
         {
-
+            
             if (_shelterRepository.IsShelterEmpty()) return null;
 
             //throw an exception if invalid kind of animal
@@ -92,7 +89,7 @@ namespace ShelterConsole.BusinessLogic
             }
             var type = d.FirstOrDefault(x => x.Value == typeof(T)).Value;
 
-            return _purchaseHelper.PurchaseAnimal<T>(identifier);
+            return _purchaseHelper.PurchaseAnimal<T>(person, identifier);
 
         }
         public string GetNumberOfAnimalsInShelter()

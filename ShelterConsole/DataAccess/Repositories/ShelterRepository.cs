@@ -65,8 +65,10 @@ namespace ShelterConsole.DataAccess.Repositories
             if (IsShelterEmpty()) throw new Exception("Shelter is empty");
             try
             {
+
                 _animals.Remove(animal);
                 Console.WriteLine($"{animal.Name} removed from the shelter");
+
             }
             catch (Exception e)
             {
@@ -81,7 +83,7 @@ namespace ShelterConsole.DataAccess.Repositories
         public Animal GetAnimal<T>(string identifier = null)
         {
 
-            if (IsShelterEmpty()) throw new Exception("Shelter is empty");
+            //if (IsShelterEmpty()) throw new Exception("Shelter is empty");
             var animals = (from animal in _animals where animal.GetType() == typeof(T) select animal).ToList();
             if (identifier != null)
             {

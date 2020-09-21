@@ -13,11 +13,11 @@ namespace ShelterConsole
         static void Main(string[] args)
         {
             const int maxNumberOfAnimals = 5;
-            Cat cat = new Cat { Name = "cat1", AgeInHumanYears = 3 };
-            Cat cat2 = new Cat { Name = "cat2" };
-            Dog dog = new Dog { Name = "dog1", AgeInHumanYears = 2 };
+            Cat cat = new Cat { Name = "cat1", AgeInHumanYears = 3, Price = 13.20 };
+            Cat cat2 = new Cat { Name = "cat2", Price = 45 };
+            Dog dog = new Dog { Name = "dog1", AgeInHumanYears = 2, Price = 22.99 };
             Dog dog2 = new Dog { Name = "dog2", AgeInHumanYears = 8 };
-            Snake snake = new Snake { Name = "snake1", AgeInHumanYears = 3 };
+            Snake snake = new Snake { Name = "snake1", AgeInHumanYears = 3, Price = 5.99 };
             Hamster hamster = new Hamster { Name = "hamster" };
             Rabbit rabbit = new Rabbit { Name = "rabbit", AgeInHumanYears = 2 };
             Rabbit rabbit2 = new Rabbit { Name = "rabbit2", AgeInHumanYears = 8 };
@@ -52,7 +52,6 @@ namespace ShelterConsole
             logic.SendAnimalToShelter(cat2, person);
             person.ShowAnimals();
             logic.GetNumberOfAnimalsInShelter();
-
             //logic.SendAnimalToShelter(dog, person2);
             //logic.SendAnimalToShelter(dog2, person2);
             //Console.WriteLine(logic.GetNumberOfCatsInShelter());
@@ -64,6 +63,8 @@ namespace ShelterConsole
             person.OwnedAnimals.Add(rabbit2.Name, rabbit2);
             person2.BuyAnimal<Cat>(logic, cat2.Name);
             person2.ShowAnimals();
+            person2.SendAnimalToShelter(logic, dog);
+            person2.ShowAnimals();
             //Console.WriteLine(logic.GetNumberOfAnimalsInShelter());
             //person.ShowAnimals();
             //Console.WriteLine(logic.GetNumberOfAnimalsInShelter("dog"));
@@ -71,7 +72,7 @@ namespace ShelterConsole
 
             //Console.WriteLine(logic.GetNumberOfCatsInShelter());
             //Console.WriteLine(logic.GetNumberOfDogsInShelter());
-            //Dog dog5 = (Dog)logic.BuyAnimal("alligator");
+           // Dog dog5 = (Dog)logic.BuyAnimal(person,"alligator");
         }
     }
 }

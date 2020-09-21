@@ -6,18 +6,24 @@ using ShelterConsole.BusinessLogic;
 using ShelterConsole.DataAccess.Interfaces;
 using ShelterConsole.DataAccess.Repositories;
 using ShelterConsole.Models;
+using System.Collections.Generic;
 
-namespace UnitTests {
-    public class ShelterLogicBuilder {
+namespace UnitTests
+{
+    public class ShelterLogicBuilder
+    {
         private IShelterRepository _shelterRepository;
 
-        public ShelterLogicBuilder WithShelterRepository(ShelterRepository shelterRepository) {
+        public ShelterLogicBuilder WithShelterRepository(ShelterRepository shelterRepository)
+        {
             _shelterRepository = shelterRepository;
             return this;
         }
 
-        public ShelterLogic Build() {
-            if (_shelterRepository == null) {
+        public ShelterLogic Build()
+        {
+            if (_shelterRepository == null)
+            {
                 var shelterRepositoryMock = new Mock<IShelterRepository>();
                 shelterRepositoryMock.Setup(s => s.AddAnimal(It.IsAny<Animal>())).Returns(true);
                 shelterRepositoryMock.Setup(s => s.RemoveAnimal(It.IsAny<Animal>())).Returns(true);
@@ -32,35 +38,129 @@ namespace UnitTests {
     }
 
     [TestClass]
-    public class ShelterLogicTests {
+    public class ShelterLogicTests
+    {
+
+
 
         [TestMethod]
-        public void SendAnimalToShelter_WithCat_ReturnsTrue() {
+        public void SendAnimalToShelter_ReturnsZeroAnimals()
+        {
             //Arrange
             var shelterLogicBuilder = new ShelterLogicBuilder();
             var shelterLogic = shelterLogicBuilder.Build();
-            var cat = new Cat();
+            var cat = new Cat { Name = "cat1", AgeInHumanYears = 3, Price = 13.20 };
+            var person = new Person
+            {
+                Name = "John",
+                Age = 18,
+                Money = 29.99,
+                OwnedAnimals = new Dictionary<string, Animal>() {
+                    { cat.Name, cat }
+                }
+            };
+
+            var expected = 0;
 
             //Act
-            var result = shelterLogic.SendAnimalToShelter(cat);
+            person.SendAnimalToShelter(shelterLogic, cat);
+            var actual = person.OwnedAnimals.Count;
 
             //Assert
-            result.Should().BeTrue();
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void SendAnimalToShelter_WithInvalidAnimal_ThrowsException() {
+        [ExpectedException(typeof(Exception), "You don't have any animals to send to shelter.")]
+        public void SendAnimalToShelter_ZeroAnimals_ThrowsException()
+        {
             //Arrange
             var shelterLogicBuilder = new ShelterLogicBuilder();
             var shelterLogic = shelterLogicBuilder.Build();
             var animal = new Animal();
+            var person = new Person
+            {
+                Name = "John",
+                Age = 18,
+                Money = 29.99,
+                OwnedAnimals = new Dictionary<string, Animal>()
+            };
+
+            shelterLogic.SendAnimalToShelter(animal, person);
+
+
+        }
+        [TestMethod]
+        [ExpectedException(typeof(System.Exception), "Wrong kind of animal!")]
+        public void SendAnimalToShelter_InvalidAnimal_ThrowsException()
+        {
+            //Arrange
+            var shelterLogicBuilder = new ShelterLogicBuilder();
+            var shelterLogic = shelterLogicBuilder.Build();
+            var cat = new Animal { Name = "cat1", AgeInHumanYears = 3, Price = 13.20 };
+            var person = new Person
+            {
+                Name = "John",
+                Age = 18,
+                Money = 29.99,
+                OwnedAnimals = new Dictionary<string, Animal>() {
+                    { cat.Name, cat }
+                }
+            };
 
             //Act
-            Action result = () => shelterLogic.SendAnimalToShelter(animal);
 
+            shelterLogic.SendAnimalToShelter(cat, person);
             //Assert
-            result.Should().Throw<Exception>();
+
         }
+        [TestMethod]
+        [ExpectedException(typeof(System.Exception), "")]
+        public void SendAnimalToShelter_NullShelter_ThrowsException()
+        {
+            //Arrange
+            ShelterLogic logic = new ShelterLogic(new ShelterRepository(0));
+            var cat = new Animal { Name = "cat1", AgeInHumanYears = 3, Price = 13.20 };
+            var person = new Person
+            {
+                Name = "John",
+                Age = 18,
+                Money = 29.99,
+                OwnedAnimals = new Dictionary<string, Animal>() {
+                    { cat.Name, cat }
+                }
+            };
+
+            //Act
+
+            logic.SendAnimalToShelter(cat, person);
+            //Assert
+
+        }
+        //[TestMethod]
+        //[ExpectedException(typeof(System.Exception), "")]
+        //public void SendAnimalToShelter_Shelter_ThrowsException()
+        //{
+        //    //Arrange
+        //    ShelterLogic logic = new ShelterLogic(new ShelterRepository(5));
+        //    var cat = new Animal { Name = "cat1", AgeInHumanYears = 3, Price = 13.20 };
+        //    var person = new Person
+        //    {
+        //        Name = "John",
+        //        Age = 18,
+        //        Money = 29.99,
+        //        OwnedAnimals = new Dictionary<string, Animal>() {
+        //            { cat.Name, cat }
+        //        }
+        //    };
+
+        //Act
+
+        // logic.SendAnimalToShelter(cat, person);
+        //Assert
+
+        // }
+
 
     }
 }

@@ -15,21 +15,39 @@ namespace ShelterConsole.Models
 
         public Dictionary<string, Animal> OwnedAnimals;
 
-        public void ShowAnimals()
+
+
+        public string ShowAnimals()
         {
-            Console.WriteLine($"{Name} owns {OwnedAnimals.Count} animal(s): {string.Join(", ", OwnedAnimals.Keys)}");
+            return ($"{Name} owns {OwnedAnimals.Count} animal(s){(string.Join(", ", OwnedAnimals.Keys))}".Trim());
         }
         public void BuyAnimal<T>(ShelterLogic shelter)
         {
 
             shelter.BuyAnimal<T>(this);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="shelter">Shelter</param>
+        /// <param name="identifier">Kind of animal</param>
         public void BuyAnimal<T>(ShelterLogic shelter, string identifier)
         {
-
-            shelter.BuyAnimal<T>(this, identifier);
+            if (this.IsOldEnoughToBuyAnimal()) shelter.BuyAnimal<T>(this, identifier);
         }
 
+        public void SendAnimalToShelter(ShelterLogic shelter, Animal animal)
+        {
+            shelter.SendAnimalToShelter(animal, this);
+        }
+
+        public bool IsOldEnoughToBuyAnimal()
+        {
+            return this.Age < 18
+                ? throw new Exception($"{this.Name} is not old enough to buy a pet.")
+                : true;
+
+        }
     }
 }
