@@ -22,7 +22,7 @@ namespace ShelterConsole.BusinessLogic
                 {"rabbit", typeof(Rabbit) }
             };
         private PurchaseHelper _purchaseHelper;
-        
+
 
         public ShelterLogic(IShelterRepository shelterRepository)
         {
@@ -71,14 +71,14 @@ namespace ShelterConsole.BusinessLogic
                         $" received {typeof(T)}");
             }
             var type = d.FirstOrDefault(x => x.Value == typeof(T)).Value;
-
+            
             return _purchaseHelper.PurchaseAnimal<T>(person);
 
         }
 
         public Animal BuyAnimal<T>(Person person, string identifier)
         {
-            
+
             if (_shelterRepository.IsShelterEmpty()) return null;
 
             //throw an exception if invalid kind of animal

@@ -44,35 +44,27 @@ namespace ShelterConsole
             };
 
             person.ShowAnimals();
-
-            ShelterLogic logic = new ShelterLogic(new ShelterRepository(maxNumberOfAnimals));
+            ShelterRepository shelter = new ShelterRepository(maxNumberOfAnimals);
+            ShelterLogic logic = new ShelterLogic(shelter);
+            Rabbit rabbit3 = null;
+            shelter.AddAnimal(rabbit3);
+            person.BuyAnimal<Rabbit>(logic);
             logic.SendAnimalToShelter(cat, person);
             person.ShowAnimals();
             logic.GetNumberOfAnimalsInShelter();
             logic.SendAnimalToShelter(cat2, person);
             person.ShowAnimals();
             logic.GetNumberOfAnimalsInShelter();
-            //logic.SendAnimalToShelter(dog, person2);
-            //logic.SendAnimalToShelter(dog2, person2);
-            //Console.WriteLine(logic.GetNumberOfCatsInShelter());
-            //Console.WriteLine(logic.GetNumberOfDogsInShelter());
-            //Cat cat4 = (Cat)logic.BuyAnimal("cat", person);
-            //Console.WriteLine(cat4.Name);
-            //Dog dog4 = (Dog)logic.BuyAnimal("dog", person2);
-            //Console.WriteLine(dog4.Name);
+
+
+
             person.OwnedAnimals.Add(rabbit2.Name, rabbit2);
             person2.BuyAnimal<Cat>(logic, cat2.Name);
             person2.ShowAnimals();
             person2.SendAnimalToShelter(logic, dog);
             person2.ShowAnimals();
-            //Console.WriteLine(logic.GetNumberOfAnimalsInShelter());
-            //person.ShowAnimals();
-            //Console.WriteLine(logic.GetNumberOfAnimalsInShelter("dog"));
 
-
-            //Console.WriteLine(logic.GetNumberOfCatsInShelter());
-            //Console.WriteLine(logic.GetNumberOfDogsInShelter());
-           // Dog dog5 = (Dog)logic.BuyAnimal(person,"alligator");
+            // logic.BuyAnimal<Dog>(person,"alligator");
         }
     }
 }

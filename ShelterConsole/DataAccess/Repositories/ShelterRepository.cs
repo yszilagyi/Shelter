@@ -83,7 +83,7 @@ namespace ShelterConsole.DataAccess.Repositories
         public Animal GetAnimal<T>(string identifier = null)
         {
 
-            //if (IsShelterEmpty()) throw new Exception("Shelter is empty");
+            
             var animals = (from animal in _animals where animal.GetType() == typeof(T) select animal).ToList();
             if (identifier != null)
             {

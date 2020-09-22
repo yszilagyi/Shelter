@@ -13,13 +13,14 @@ namespace ShelterConsole.Helpers.Tests
     public class PurchaseHelperTests
     {
         [TestMethod()]
+        //[ExpectedException(typeof(NullReferenceException))]
 
-        public void PurchaseAnimalTest()
+        public void PurchaseAnimal_NullShelterTest()
         {
-            var shelter = new ShelterRepository(1);
+            var shelter = new ShelterRepository(0);
             var logic = new ShelterLogic(shelter);
-            Cat cat = null;
-            shelter.AddAnimal(cat);
+            //Cat cat = null;
+            //shelter.AddAnimal(cat);
             var person = new Person
             {
                 Name = "John",
@@ -28,7 +29,7 @@ namespace ShelterConsole.Helpers.Tests
                 OwnedAnimals = new Dictionary<string, Animal>()
             };
 
-            person.BuyAnimal<Cat>(logic);
+            var actual = person.BuyAnimal<Cat>(logic);
 
         }
     }

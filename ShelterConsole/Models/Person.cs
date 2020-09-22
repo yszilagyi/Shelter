@@ -21,10 +21,17 @@ namespace ShelterConsole.Models
         {
             return ($"{Name} owns {OwnedAnimals.Count} animal(s){(string.Join(", ", OwnedAnimals.Keys))}".Trim());
         }
-        public void BuyAnimal<T>(ShelterLogic shelter)
+        public Animal BuyAnimal<T>(ShelterLogic shelter)
         {
+            if (this.IsOldEnoughToBuyAnimal())
+            {
+                return shelter.BuyAnimal<T>(this);
+            }
+            else
+            {
+                throw new Exception($"{this.Name} is not old enough to buy a pet.");
+            }
 
-            shelter.BuyAnimal<T>(this);
         }
         /// <summary>
         /// 
@@ -32,9 +39,16 @@ namespace ShelterConsole.Models
         /// <typeparam name="T"></typeparam>
         /// <param name="shelter">Shelter</param>
         /// <param name="identifier">Kind of animal</param>
-        public void BuyAnimal<T>(ShelterLogic shelter, string identifier)
+        public Animal BuyAnimal<T>(ShelterLogic shelter, string identifier)
         {
-            if (this.IsOldEnoughToBuyAnimal()) shelter.BuyAnimal<T>(this, identifier);
+            if (this.IsOldEnoughToBuyAnimal())
+            {
+                return shelter.BuyAnimal<T>(this, identifier);
+            }
+            else
+            {
+                throw new Exception($"{this.Name} is not old enough to buy a pet.");
+            }
         }
 
         public void SendAnimalToShelter(ShelterLogic shelter, Animal animal)
@@ -45,7 +59,7 @@ namespace ShelterConsole.Models
         public bool IsOldEnoughToBuyAnimal()
         {
             return this.Age < 18
-                ? throw new Exception($"{this.Name} is not old enough to buy a pet.")
+                ? false
                 : true;
 
         }
