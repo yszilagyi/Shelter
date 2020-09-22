@@ -7,6 +7,7 @@ using System.Threading;
 using System.Reflection;
 using ShelterConsole.Utilities;
 using System.Security.Cryptography;
+using System.Diagnostics.Contracts;
 
 namespace ShelterConsole.DataAccess.Repositories
 {
@@ -23,13 +24,6 @@ namespace ShelterConsole.DataAccess.Repositories
         private List<Animal> _animals;
         public String[] _animalsInShelter;
         private int _maxNumberOfAnimals;
-        //public Animal[] GetInheritedClasses(Animal animal)
-        //{
-        //    //if you want the abstract classes drop the !TheType.IsAbstract but it is probably to instance so its a good idea to keep it.
-        //    var x = Assembly.GetAssembly(typeof(Animal)).GetTypes().Where(TheType => TheType.IsClass
-        //                && TheType.IsSubclassOf(typeof(Animal)));
-        //    return new Animal[0];
-        //}
 
         public ShelterRepository(int maxNumberOfAnimals)
         {
@@ -63,17 +57,15 @@ namespace ShelterConsole.DataAccess.Repositories
             if (animal == null) throw new Exception("Animal is empty");
             // if the shelter is empty throw an exception
             if (IsShelterEmpty()) throw new Exception("Shelter is empty");
-            try
-            {
 
-                _animals.Remove(animal);
-                Console.WriteLine($"{animal.Name} removed from the shelter");
-
-            }
-            catch (Exception e)
+            if (!this._animals.Contains(animal))
             {
-                throw new Exception("Something went wrong", e);
+                throw new Exception("Something went wrong");
             }
+            _animals.Remove(animal);
+            Console.WriteLine($"{animal.Name} removed from the shelter");
+
+
             // return true if the operation go well
             return true;
         }

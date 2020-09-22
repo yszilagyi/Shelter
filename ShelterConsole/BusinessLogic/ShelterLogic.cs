@@ -44,34 +44,35 @@ namespace ShelterConsole.BusinessLogic
                 {
                     throw new Exception("Wrong kind of animal!");
                 }
+                else if (person.OwnedAnimals.TryGetValue(animal.Name, out animal))
+                {
+                    Console.WriteLine($"{person.Name} is sending {animal.Name} to Shelter.");
+                    _shelterRepository.AddAnimal(animal);
+                    person.OwnedAnimals.Remove(animal.Name);
+                }
                 else
-                    try
-                    {
-                        Console.WriteLine($"{person.Name} is sending {animal.Name} to Shelter.");
-                        _shelterRepository.AddAnimal(animal);
-                        person.OwnedAnimals.Remove(animal.Name);
-                    }
-                    catch (Exception e)
-                    {
-                        throw new Exception("Something went wrong", e);
-                    }
+
+                {
+                    throw new Exception("Something went wrong");
+                }
+
+                return true;
             }
-            return true;
         }
 
         public Animal BuyAnimal<T>(Person person)
         {
-            
+
             if (_shelterRepository.IsShelterEmpty()) return null;
 
             //throw an exception if invalid kind of animal
             if (!d.ContainsValue(typeof(T)))
             {
-                throw new ArgumentException($"Expected {string.Join(", ", d.Values.ToList())}" +
-                        $" received {typeof(T)}");
+                throw new ArgumentException($"Expected {string.Join(", ", d.Keys.ToList())}" +
+                        $" received {typeof(T).Name.ToLower()}");
             }
             var type = d.FirstOrDefault(x => x.Value == typeof(T)).Value;
-            
+
             return _purchaseHelper.PurchaseAnimal<T>(person);
 
         }
@@ -84,8 +85,8 @@ namespace ShelterConsole.BusinessLogic
             //throw an exception if invalid kind of animal
             if (!d.ContainsValue(typeof(T)))
             {
-                throw new ArgumentException($"Expected {string.Join(", ", d.Values.ToList())}" +
-                        $" received {typeof(T)}");
+                throw new ArgumentException($"Expected {string.Join(", ", d.Keys.ToList())}" +
+                        $" received {typeof(T).Name.ToLower()}");
             }
             var type = d.FirstOrDefault(x => x.Value == typeof(T)).Value;
 
@@ -109,7 +110,7 @@ namespace ShelterConsole.BusinessLogic
             {
                 throw new Exception("Wrong type of animal");
             }
-            return $"{_shelterRepository.GetNumberOfAnimalsInShelter(value)} {value.Name}(s) in the shelter";
+            return $"{_shelterRepository.GetNumberOfAnimalsInShelter(value)} {value.Name.ToLower()}(s) in the shelter";
         }
         public string GetNumberOfCatsInShelter()
         {

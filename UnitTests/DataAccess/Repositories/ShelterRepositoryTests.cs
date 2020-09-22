@@ -175,5 +175,16 @@ namespace ShelterConsole.DataAccess.Repositories.Tests
             Cat cat = new Cat { Name = "cat", AgeInHumanYears = 2 };
             shelter.RemoveAnimal(cat);
         }
+
+        [TestMethod()]
+        [ExpectedException(typeof(Exception), "Something went wrong")]
+        public void RemoveAnimalTest()
+        {
+            var shelter = new ShelterRepository(1);
+            Cat cat = new Cat { Name = "cat", AgeInHumanYears = 2 };
+            Dog dog = new Dog { Name = "dog1", AgeInHumanYears = 2, Price = 22.99 };
+            shelter.AddAnimal(cat);
+            shelter.RemoveAnimal(dog);
+        }
     }
 }
