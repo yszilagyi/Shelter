@@ -22,7 +22,7 @@ namespace ShelterConsole.Helpers
         {
             var satanicBeast = _shelterRepository.GetAnimal<T>(identifier);
             // check if the cat is not null, if null inform user about it
-            if (satanicBeast == null) throw new Exception("This is a very rare null animal, you cannot has it");
+            //if (satanicBeast == null) throw new Exception("This is a very rare null animal, you cannot has it");
             if (person.Money < satanicBeast.Price) throw new Exception($"{person.Name} cannot afford this majestic creature.");
             // cat need to be removed after selling it
             Console.WriteLine($"{person.Name} is buying {satanicBeast.Name} for £{satanicBeast.Price}.");

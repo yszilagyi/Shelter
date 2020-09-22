@@ -7,6 +7,7 @@ using ShelterConsole.DataAccess.Interfaces;
 using ShelterConsole.DataAccess.Repositories;
 using ShelterConsole.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace UnitTests
 {
@@ -14,11 +15,11 @@ namespace UnitTests
     {
         private IShelterRepository _shelterRepository;
 
-        public ShelterLogicBuilder WithShelterRepository(ShelterRepository shelterRepository)
-        {
-            _shelterRepository = shelterRepository;
-            return this;
-        }
+        //public ShelterLogicBuilder WithShelterRepository(ShelterRepository shelterRepository)
+        //{
+        //    _shelterRepository = shelterRepository;
+        //    return this;
+        //}
 
         public ShelterLogic Build()
         {
@@ -137,29 +138,22 @@ namespace UnitTests
             //Assert
 
         }
-        //[TestMethod]
-        //[ExpectedException(typeof(System.Exception), "")]
-        //public void SendAnimalToShelter_Shelter_ThrowsException()
-        //{
-        //    //Arrange
-        //    ShelterLogic logic = new ShelterLogic(new ShelterRepository(5));
-        //    var cat = new Animal { Name = "cat1", AgeInHumanYears = 3, Price = 13.20 };
-        //    var person = new Person
-        //    {
-        //        Name = "John",
-        //        Age = 18,
-        //        Money = 29.99,
-        //        OwnedAnimals = new Dictionary<string, Animal>() {
-        //            { cat.Name, cat }
-        //        }
-        //    };
 
-        //Act
+        
+        [TestMethod]
+        public void IsShelterFullTest()
+        {
+            ShelterRepository shelter = new ShelterRepository(1);
+            ShelterLogic logic = new ShelterLogic(shelter);
+            Rabbit rabbit2 = new Rabbit { Name = "rabbit2", AgeInHumanYears = 8 };
+            shelter.AddAnimal(rabbit2);
 
-        // logic.SendAnimalToShelter(cat, person);
-        //Assert
+            var expected = true;
+            var actual = shelter.IsShelterFull();
 
-        // }
+            Assert.AreEqual(expected, actual);
+
+        }
 
 
     }

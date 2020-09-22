@@ -60,7 +60,7 @@ namespace ShelterConsole.DataAccess.Repositories
         public bool RemoveAnimal(Animal animal)
         {
             // if the animal is null throw an exception
-            if (animal.Equals(null)) throw new Exception("Animal is empty");
+            if (animal == null) throw new Exception("Animal is empty");
             // if the shelter is empty throw an exception
             if (IsShelterEmpty()) throw new Exception("Shelter is empty");
             try
@@ -82,15 +82,21 @@ namespace ShelterConsole.DataAccess.Repositories
 
         public Animal GetAnimal<T>(string identifier = null)
         {
-
-            
-            var animals = (from animal in _animals where animal.GetType() == typeof(T) select animal).ToList();
+            var allAnimals = (from animal in _animals where animal != null select animal).ToList();
+            if (!allAnimals.Any())
+            {
+                throw new NullReferenceException("This is a very rare null animal, you cannot has it");
+            }
+            var animals = (from animal in allAnimals where animal.GetType() == typeof(T) select animal).ToList();
             if (identifier != null)
             {
                 //InvariantCultureIgnoreCase case does not matter, accents.
                 return animals.FirstOrDefault(x => x.Name.Equals(identifier, StringComparison.InvariantCultureIgnoreCase));
             }
             return (from animal in _animals where animal.GetType() == typeof(T) select animal).FirstOrDefault();
+
+            //var animals = (from animal in _animals where animal.GetType() == typeof(T) select animal).ToList();
+
         }
         #endregion
         #region Get numbers of animals
